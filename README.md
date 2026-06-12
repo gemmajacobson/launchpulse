@@ -67,6 +67,10 @@ Copy `.env.example` to `.env`:
 | `HUBSPOT_API_KEY` | HubSpot private app token for contact sync |
 | `SLACK_WEBHOOK_URL` | Incoming webhook for the nightly digest |
 
+## Sample data
+
+> **Note:** all leads, companies, names and email addresses in this repository ([scripts/fixtures.ts](scripts/fixtures.ts) and the test suite) are **fictional example data**, invented for demo purposes. Email addresses use the reserved `example.com` / `example.org` domains (RFC 2606), which cannot belong to real mailboxes. Any resemblance to real people or companies is coincidental.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). All changes go through PR review and must pass CI.

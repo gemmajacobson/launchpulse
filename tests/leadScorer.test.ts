@@ -4,10 +4,10 @@ import type { Activity, Lead } from '../src/lib/types.js';
 
 const baseLead: Lead = {
   id: 'lead-1',
-  email: 'maya@acme.io',
+  email: 'maya.chen@acme.example.com',
   firstName: 'Maya',
   lastName: 'Chen',
-  company: 'Acme',
+  company: 'Acme (fictional)',
   title: 'VP of Engineering',
   industry: 'software',
   employeeCount: 400,
