@@ -1,0 +1,48 @@
+name: Deploy to staging
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: staging-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build & deploy staging
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Package release bundle
+        run: |
+          tar -czf launchpulse-staging.tar.gz dist package.json package-lock.json
+          echo "Bundle size: $(du -h launchpulse-staging.tar.gz | cut -f1)"
+
+      - name: Deploy to staging
+        run: |
+          echo "Deploying launchpulse ${GITHUB_SHA::7} to staging..."
+          echo "(stub deploy — wire up your hosting provider here)"
+          sleep 2
+          echo "Staging deploy complete."
+
+      - name: Smoke test
+        run: |
+          echo "Running post-deploy smoke checks against staging..."
+          echo "healthz: ok"

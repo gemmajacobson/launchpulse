@@ -1,0 +1,37 @@
+name: Nightly lead scoring
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  score:
+    name: Score leads & post digest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run nightly scoring job
+        run: npm run score:nightly
+        env:
+          HUBSPOT_API_KEY: ${{ secrets.HUBSPOT_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Upload scoring report
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-scoring-report
+          path: reports/
+          retention-days: 30
+          if-no-files-found: ignore
